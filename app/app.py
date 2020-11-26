@@ -4,6 +4,7 @@ import os
 from flask import Flask, redirect
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ except Exception as ex:
 def index():
     return 'Hello world!'
 
-@app.route("/loogin")
+@app.route("/login")
 def login():
     return redirect(AUTH_URL, code=302)
 
@@ -29,4 +30,5 @@ def custom_callback():
     return "Logged in!"
 
 if __name__ == "__main__":
-    app.run()
+    serve(app, host='0.0.0.0', port='8000')
+
